@@ -1,0 +1,35 @@
+$parentPath = "C:\Users\softrock\Desktop\猫啃网字体大全\其它国家"
+
+Get-ChildItem -Path $parentPath -Directory | ForEach-Object {
+
+    $mainFolder = $_.FullName
+
+    # 遍历所有子文件夹
+    Get-ChildItem -Path $mainFolder -Directory | ForEach-Object {
+
+        $subFolder = $_.FullName
+
+        # 遍历每个文件
+        Get-ChildItem -Path $subFolder -File -Recurse | ForEach-Object {
+            $sourceFile = $_.FullName
+            $fileName = $_.BaseName
+            $extension = $_.Extension
+            $destPath = Join-Path $mainFolder ($fileName + $extension)
+            $counter = 1
+
+            # 如果目标已存在，就重命名
+            while (Test-Path $destPath) {
+                $newName = "$fileName($counter)$extension"
+                $destPath = Join-Path $mainFolder $newName
+                $counter++
+            }
+
+            Move-Item -Path $sourceFile -Destination $destPath
+        }
+
+        # 删除子文件夹
+        Remove-Item -Path $subFolder -Recurse -Force
+    }
+}
+
+Write-Host "✅ 所有文件已移动，重复文件已自动重命名，子文件夹已删除"
