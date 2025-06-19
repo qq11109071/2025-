@@ -1,0 +1,74 @@
+@use 'sass:map';
+@use './tools/' as tools;
+
+@use 'bold/index' as bold;
+@use 'extralight/index' as extralight;
+@use 'light/index' as light;
+@use 'medium/index' as medium;
+@use 'regular/index' as regular;
+@use 'semibold/index' as semibold;
+@use 'text/index' as text;
+@use 'thin/index' as thin;
+
+$font-prefix: '..' !default;
+$unicode-ranges: ('KR-00','KR-01','KR-02','KR-03','KR-04','KR-05','KR-06','KR-07','KR-08','KR-09','KR-10','KR-11','KR-12','KR-13','KR-14','KR-15','KR-16','KR-17','KR-18','KR-19','KR-20','KR-21','KR-22','KR-23','KR-24','KR-25','KR-26','KR-27','KR-28','KR-29','KR-30','KR-31','KR-32','KR-33','KR-34','KR-35','KR-36','KR-37','KR-38','KR-39','KR-40','KR-41','KR-42','KR-43','KR-44','KR-45','KR-46','KR-47','KR-48','KR-49','KR-50','KR-51','KR-52','KR-53','KR-54','KR-55','KR-56','KR-57','KR-58','KR-59','KR-60','KR-61','KR-62','KR-63','KR-64','KR-65','KR-66','KR-67','KR-68','KR-69','KR-70','KR-71','KR-72','KR-73','KR-74','KR-75','KR-76','KR-77','KR-78','KR-79','KR-80','KR-81','KR-82','KR-83','KR-84','KR-85','KR-86','KR-87','KR-88','KR-89','KR-90','KR-91','KR-92','KR-93');
+$-font-weights: (
+	bold: true,
+	extralight: true,
+	light: true,
+	medium: true,
+	regular: true,
+	semibold: true,
+	text: true,
+	thin: true
+);
+$font-weights: () !default;
+$font-weights: map.merge($-font-weights, $font-weights);
+
+@mixin all($font-prefix: $font-prefix, $unicode-ranges: $unicode-ranges) {
+	@if tools.enabled($font-weights, 'bold') {
+		@include bold.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'extralight') {
+		@include extralight.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'light') {
+		@include light.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'medium') {
+		@include medium.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'regular') {
+		@include regular.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'semibold') {
+		@include semibold.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'text') {
+		@include text.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'thin') {
+		@include thin.all($font-prefix, $unicode-ranges);
+	}
+}
+
+@mixin default($font-prefix: $font-prefix, $unicode-ranges: $unicode-ranges) {
+	@if tools.enabled($font-weights, 'light') {
+		@include light.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'regular') {
+		@include regular.all($font-prefix, $unicode-ranges);
+	}
+
+	@if tools.enabled($font-weights, 'semibold') {
+		@include semibold.all($font-prefix, $unicode-ranges);
+	}
+}
